@@ -33,11 +33,15 @@ function LinkedinIcon(p: SVGProps<SVGSVGElement>) {
   );
 }
 
-const SOCIAL = [
-  { href: "https://www.facebook.com/arman.salek.88/",     label: "Facebook",  icon: FacebookIcon },
-  { href: "https://www.instagram.com/arman._.salek",      label: "Instagram", icon: InstagramIcon },
-  { href: "https://www.linkedin.com/in/abu-salek-arman/", label: "LinkedIn",  icon: LinkedinIcon },
+// KalbaLab's own social pages aren't live yet — icons show a "coming soon"
+// tooltip instead of linking anywhere. Add an `href` here once a page exists.
+const SOCIAL: { label: string; icon: (p: SVGProps<SVGSVGElement>) => React.JSX.Element; href?: string }[] = [
+  { label: "Facebook",  icon: FacebookIcon },
+  { label: "Instagram", icon: InstagramIcon },
+  { label: "LinkedIn",  icon: LinkedinIcon },
 ];
+
+const DEVELOPER_URL = "https://armansalek.com";
 
 export function Footer({ className }: { className?: string }) {
   const { t, lang } = useTranslation();
@@ -86,6 +90,8 @@ export function Footer({ className }: { className?: string }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("yourEmail")}
+                  aria-label={t("yourEmail")}
+                  autoComplete="email"
                   required
                   className="flex-1 min-w-0 px-3 py-2 rounded-l-lg border border-white/10 bg-white/[0.03] text-gray-200 placeholder-gray-600 focus:border-amber-500/40 focus:outline-none text-sm"
                 />
@@ -119,7 +125,7 @@ export function Footer({ className }: { className?: string }) {
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">{t("resources")}</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/exam-prep"   className="text-gray-400 hover:text-amber-300 transition-colors">{t("examInfo")}</Link></li>
+              <li><Link href="/lithuanian-a1-exam" className="text-gray-400 hover:text-amber-300 transition-colors">{t("examInfo")}</Link></li>
               <li><Link href="/blog"        className="text-gray-400 hover:text-amber-300 transition-colors">{t("blog")}</Link></li>
               <li><Link href="/faq"         className="text-gray-400 hover:text-amber-300 transition-colors">{t("faq")}</Link></li>
               <li><Link href="/about"       className="text-gray-400 hover:text-amber-300 transition-colors">{t("about")}</Link></li>
@@ -137,25 +143,37 @@ export function Footer({ className }: { className?: string }) {
                 </a>
               </li>
               <li>
-                <a href="mailto:armansalekofficial@gmail" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-amber-300 transition-colors">
-                  <Mail size={14} /> armansalekofficial@gmail
+                <a href="mailto:armansalekofficial@gmail.com" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-amber-300 transition-colors">
+                  <Mail size={14} /> armansalekofficial@gmail.com
                 </a>
               </li>
             </ul>
             {/* Social */}
             <div className="flex items-center gap-2 mt-4">
-              {SOCIAL.map((s) => (
-                <a
-                  key={s.href}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="w-8 h-8 rounded-lg border border-white/10 bg-white/[0.03] hover:border-amber-500/40 hover:text-amber-400 text-gray-400 flex items-center justify-center transition-all"
-                >
-                  <s.icon width={14} height={14} />
-                </a>
-              ))}
+              {SOCIAL.map((s) =>
+                s.href ? (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="w-8 h-8 rounded-lg border border-white/10 bg-white/[0.03] hover:border-amber-500/40 hover:text-amber-400 text-gray-400 flex items-center justify-center transition-all"
+                  >
+                    <s.icon width={14} height={14} />
+                  </a>
+                ) : (
+                  <span
+                    key={s.label}
+                    role="img"
+                    title={`KalbaLab on ${s.label} — coming soon`}
+                    aria-label={`KalbaLab on ${s.label} — coming soon`}
+                    className="w-8 h-8 rounded-lg border border-white/10 bg-white/[0.03] text-gray-600 flex items-center justify-center cursor-default"
+                  >
+                    <s.icon width={14} height={14} />
+                  </span>
+                ),
+              )}
             </div>
           </div>
 
@@ -199,7 +217,7 @@ export function Footer({ className }: { className?: string }) {
             {t("madeIn")}{" · "}
             <span>
               {t("developedBy")}{" "}
-              <a href="https://www.facebook.com/arman.salek.88/" target="_blank" rel="noopener noreferrer" className="text-amber-400/80 hover:text-amber-300">
+              <a href={DEVELOPER_URL} target="_blank" rel="noopener" className="text-amber-400/80 hover:text-amber-300">
                 Arman
               </a>
             </span>

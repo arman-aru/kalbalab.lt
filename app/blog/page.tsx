@@ -15,7 +15,7 @@ import { SITE, abs } from "@/lib/seo/site";
 export const revalidate = 300;
 
 export const metadata = buildMetadata({
-  title: "KalbaLab Blog — Lithuanian language guides & A1 exam tips",
+  title: "Lithuanian Language Guides & A1 Exam Tips — Blog",
   description:
     "Practical guides for learning Lithuanian and passing the A1 integration exam — written for the international community living in Lithuania.",
   path: "/blog",

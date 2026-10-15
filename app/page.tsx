@@ -18,9 +18,9 @@ const HOME_COUNTS = {
 };
 
 export const metadata: Metadata = buildMetadata({
-  title: "KalbaLab — Learn Lithuanian, in your language",
+  title: "Learn Lithuanian Online Free — A1 Lessons & Exam Prep | KalbaLab",
   description:
-    "Learn Lithuanian with native audio, multilingual explanations (Bengali, Hindi, Urdu, Uzbek, Tajik, Kyrgyz, Azerbaijani, Arabic, Turkish, English) and complete A1 integration-exam preparation.",
+    "Learn Lithuanian free: A1 lessons, 220 words with native audio, explanations in 10 languages and full A1 exam preparation for the international community.",
   path: "/",
   type: "website",
   // No explicit image — buildMetadata falls back to the site-wide

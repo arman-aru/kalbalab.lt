@@ -1,7 +1,18 @@
 import type { MetadataRoute } from "next";
 import { listPublishedPosts } from "@/lib/blog/queries";
+import { allLearnPages } from "@/lib/seo/learn";
+import { SITE as SITE_CONFIG } from "@/lib/seo/site";
 
-const SITE = "https://kalbalab.lt";
+const SITE = SITE_CONFIG.url;
+
+// Re-generate hourly so newly published blog posts appear without a redeploy.
+export const revalidate = 3600;
+
+// Learning content is the site's main organic entry point — rank it just
+// below the home page. Section hubs (no "a1/" sub-path) get a slight boost.
+function learnPriority(path: string) {
+  return path.split("/").length <= 2 ? 0.9 : 0.8;
+}
 
 const STATIC_ROUTES: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
   { path: "/",         priority: 1.0, changeFrequency: "weekly" },
@@ -24,6 +35,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: r.priority,
   }));
 
+  const learnEntries: MetadataRoute.Sitemap = allLearnPages().map((p) => ({
+    url: `${SITE}${p.path}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: learnPriority(p.path),
+  }));
+
   let posts: Awaited<ReturnType<typeof listPublishedPosts>> = [];
   try {
     posts = await listPublishedPosts({ limit: 100 });
@@ -38,5 +56,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...postEntries];
+  return [...staticEntries, ...learnEntries, ...postEntries];
 }

@@ -97,8 +97,9 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">{t("fullName")}</label>
+              <label htmlFor="register-name" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">{t("fullName")}</label>
               <input
+                id="register-name" autoComplete="name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -109,8 +110,9 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">{t("email")}</label>
+              <label htmlFor="register-email" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">{t("email")}</label>
               <input
+                id="register-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -122,9 +124,10 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">{t("password")}</label>
+              <label htmlFor="register-password" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">{t("password")}</label>
               <div className="relative">
                 <input
+                  id="register-password" autoComplete="new-password"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

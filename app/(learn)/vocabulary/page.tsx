@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, Bookmark, BookmarkCheck, ChevronDown, ChevronUp, Grid, List } from "lucide-react";
 import { AudioButton } from "@/components/audio/AudioButton";
 import { cn, getPosColor, getPosLabel, getGenderLabel, getLevelColor } from "@/lib/utils";
@@ -99,6 +99,8 @@ function VocabRow({ word, saved, onToggleSave, lang, native, exampleNative }: {
         <td className="px-3 py-3 w-12">
           <button
             onClick={(e) => { e.stopPropagation(); onToggleSave(word.id); }}
+            aria-label={saved ? `Remove ${word.lithuanian} from saved words` : `Save ${word.lithuanian}`}
+            aria-pressed={saved}
             className={cn("p-1 rounded transition-colors", saved ? "text-amber-400" : "text-gray-600 hover:text-gray-400")}
           >
             {saved ? <BookmarkCheck size={14} /> : <Bookmark size={14} />}
@@ -166,6 +168,8 @@ function VocabCard({ word, saved, onToggleSave, lang, native, exampleNative }: {
         </div>
         <button
           onClick={() => onToggleSave(word.id)}
+          aria-label={saved ? `Remove ${word.lithuanian} from saved words` : `Save ${word.lithuanian}`}
+          aria-pressed={saved}
           className={cn("p-1.5 rounded-lg transition-colors flex-shrink-0", saved ? "text-amber-400 bg-amber-500/10" : "text-gray-600 hover:text-gray-400")}
         >
           {saved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
@@ -208,6 +212,12 @@ export default function VocabularyPage() {
   const [view, setView] = useState<"table" | "card">("table");
   const [page, setPage] = useState(1);
   const [saved, setSaved] = useState<Set<string>>(new Set());
+
+  // Honour ?search= links (the WebSite SearchAction in our JSON-LD points here).
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("search");
+    if (q) setSearch(q);
+  }, []);
 
   const toggleSave = (id: string) => {
     setSaved((prev) => {

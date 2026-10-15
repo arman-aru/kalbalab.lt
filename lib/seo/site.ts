@@ -20,7 +20,7 @@ export const SITE = {
     // "https://www.youtube.com/@kalbalab",
   ],
   contact: {
-    email: "info@kalbalab.lt",
+    email: "armansalekofficial@gmail.com",
     // Optional. If present, populates Organization.contactPoint.
     telephone: undefined as string | undefined,
     areaServed: "LT",
@@ -43,6 +43,6 @@ export function abs(path = "/"): string {
 /** Build hreflang `alternates.languages` map for a given path (no locale prefix). */
 export function hreflangFor(path: string): Record<string, string> {
   const map: Record<string, string> = { "x-default": abs(path) };
-  for (const l of SITE.locales) map[l] = abs(path);
+  map[SITE.defaultLocale] = abs(path);
   return map;
 }

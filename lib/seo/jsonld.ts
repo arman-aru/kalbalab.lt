@@ -229,3 +229,53 @@ export function howToLd(args: {
     })),
   };
 }
+
+/** A single lesson / study page (grammar topic, dialogue, reading set…). */
+export function learningResourceLd(args: {
+  url: string;
+  name: string;
+  description: string;
+  educationalLevel?: string;          // e.g. "A1"
+  teaches?: string;
+  learningResourceType?: string;      // e.g. "Lesson", "Dialogue", "Flashcards"
+  isPartOf?: string;                  // URL of the parent course
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    name: args.name,
+    description: args.description,
+    url: args.url,
+    inLanguage: ["lt", "en"],
+    isAccessibleForFree: true,
+    provider: { "@id": `${SITE.url}#organization` },
+    ...(args.educationalLevel && { educationalLevel: args.educationalLevel }),
+    ...(args.teaches && { teaches: args.teaches }),
+    ...(args.learningResourceType && { learningResourceType: args.learningResourceType }),
+    ...(args.isPartOf && { isPartOf: { "@type": "Course", url: args.isPartOf } }),
+  };
+}
+
+/** A glossary / word list — each term with its translation as description. */
+export function definedTermSetLd(args: {
+  url: string;
+  name: string;
+  description: string;
+  terms: { name: string; description: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${args.url}#terms`,
+    name: args.name,
+    description: args.description,
+    url: args.url,
+    inLanguage: "lt",
+    hasDefinedTerm: args.terms.map((t) => ({
+      "@type": "DefinedTerm",
+      name: t.name,
+      description: t.description,
+      inDefinedTermSet: `${args.url}#terms`,
+    })),
+  };
+}

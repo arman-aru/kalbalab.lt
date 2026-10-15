@@ -5,7 +5,7 @@ import { breadcrumbLd } from "@/lib/seo/jsonld";
 import { SITE, abs } from "@/lib/seo/site";
 
 export const metadata = buildMetadata({
-  title: "Contact KalbaLab",
+  title: "Contact Us",
   description:
     "Get in touch with KalbaLab — questions about Lithuanian lessons, A1 exam preparation, content suggestions, or partnership inquiries.",
   path: "/contact",

@@ -30,6 +30,24 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (!("serviceWorker" in navigator)) return;
+
+    // Dev builds don't hash chunk filenames, so a worker caching them serves
+    // stale JS after every rebuild and breaks hydration. Remove any worker a
+    // previous dev session installed, and never register one in dev.
+    if (process.env.NODE_ENV !== "production") {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then((regs) => Promise.all(regs.map((r) => r.unregister())))
+        .catch(() => { /* non-fatal */ });
+      if ("caches" in window) {
+        caches
+          .keys()
+          .then((keys) => Promise.all(keys.filter((k) => k.startsWith("kalbalab-")).map((k) => caches.delete(k))))
+          .catch(() => { /* non-fatal */ });
+      }
+      return;
+    }
+
     if (window.location.protocol === "http:" && window.location.hostname !== "localhost") return;
 
     const register = () => {

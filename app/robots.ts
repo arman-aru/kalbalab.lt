@@ -29,9 +29,10 @@ const PRIVATE_PATHS = [
   "/admin",
   "/api",
   "/auth",
-  "/(protected)",
   "/dashboard",
   "/profile",
+  "/quizzes",
+  "/exam-prep/",
 ];
 
 export default function robots(): MetadataRoute.Robots {

@@ -2,12 +2,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 // Routes that require an authenticated user.
+// /flashcards, /lessons and /vocabulary are intentionally public — guests can
+// browse them; XP/progress features simply no-op without a signed-in user.
 const PROTECTED = [
   "/dashboard",
   "/profile",
-  "/flashcards",
-  "/lessons",
-  "/vocabulary",
   "/quizzes",
   "/exam-prep",
 ];
@@ -99,9 +98,6 @@ export const config = {
     "/admin/:path*",
     "/dashboard/:path*",
     "/profile/:path*",
-    "/flashcards/:path*",
-    "/lessons/:path*",
-    "/vocabulary/:path*",
     "/quizzes/:path*",
     "/exam-prep/:path*",
     "/login",

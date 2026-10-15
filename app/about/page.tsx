@@ -7,9 +7,9 @@ import { breadcrumbLd } from "@/lib/seo/jsonld";
 import { SITE, abs } from "@/lib/seo/site";
 
 export const metadata = buildMetadata({
-  title: "About KalbaLab",
+  title: "About Us",
   description:
-    "KalbaLab is a free Lithuanian language learning platform built for the international community in Lithuania — A1 vocabulary, native audio, multilingual explanations, and full integration-exam preparation.",
+    "KalbaLab is a free Lithuanian learning platform for the international community in Lithuania: A1 vocabulary, native audio and A1 exam preparation.",
   path: "/about",
 });
 
@@ -82,7 +82,7 @@ export default function AboutPage() {
         <ContentCard>
           <h2 className="text-xl font-bold text-gray-100 mb-3">Who&apos;s behind it</h2>
           <p className="text-gray-300 leading-relaxed mb-3">
-            KalbaLab was founded by <a href="https://www.facebook.com/arman.salek.88/" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 font-medium">Arman</a>,
+            KalbaLab was founded by <a href="https://armansalek.com" target="_blank" rel="noopener" className="text-amber-400 hover:text-amber-300 font-medium">Arman</a>,
             a member of the Bangladeshi community in Lithuania, after watching friends struggle to find quality study materials in their native language.
             What started as a personal project for the Bangladeshi community has expanded to support seven languages,
             and we&apos;re continuing to add more as our community grows.
