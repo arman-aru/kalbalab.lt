@@ -143,8 +143,10 @@ export function Footer({ className }: { className?: string }) {
                 </a>
               </li>
               <li>
-                <a href="mailto:armansalekofficial@gmail.com" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-amber-300 transition-colors">
-                  <Mail size={14} /> armansalekofficial@gmail.com
+                <a href="mailto:armansalekofficial@gmail.com" className="inline-flex items-start gap-1.5 max-w-full text-gray-400 hover:text-amber-300 transition-colors">
+                  <Mail size={14} className="mt-1 shrink-0" />
+                  {/* <wbr> lets the address wrap at "@" in narrow columns instead of overflowing. */}
+                  <span className="min-w-0">armansalekofficial<wbr />@gmail.com</span>
                 </a>
               </li>
             </ul>
